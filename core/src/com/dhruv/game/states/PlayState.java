@@ -31,6 +31,8 @@ public class PlayState extends State {
         cam.setToOrtho(false, FlappyDemo.WIDTH / 2, FlappyDemo.HEIGHT / 2);
         System.out.println(cam.position.x);
         System.out.println(cam.position.y);
+        System.out.println(cam.position.z);
+
 
 
     }
