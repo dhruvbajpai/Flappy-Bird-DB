@@ -32,6 +32,7 @@ public class PlayState extends State {
         System.out.println(cam.position.x);
         System.out.println(cam.position.y);
 
+
     }
 
     @Override
