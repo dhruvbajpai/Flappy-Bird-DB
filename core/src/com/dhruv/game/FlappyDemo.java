@@ -2,6 +2,7 @@ package com.dhruv.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dhruv.game.states.GameStateManager;
@@ -14,13 +15,17 @@ public class FlappyDemo extends ApplicationAdapter {
 	private GameStateManager gsm;
 	private SpriteBatch batch; // very heavy files..only need one and pass it around to different states
 	//Texture img;
-
+	private Music music;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		gsm = new GameStateManager();
 		Gdx.gl.glClearColor(1, 0, 0, 1);
+		music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+		music.setLooping(true);
+		music.setVolume(0.3f);//10% volume
+		music.play();
 		gsm.push(new MenuState(gsm));
 		//img = new Texture("badlogic.jpg");
 	}
@@ -40,6 +45,7 @@ public class FlappyDemo extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		music.dispose();
 		//img.dispose();
 	}
 }

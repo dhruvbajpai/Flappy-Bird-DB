@@ -15,6 +15,8 @@ import com.dhruv.game.sprites.Tube;
  */
 public class PlayState extends State {
 
+    private int curTubeNumber=0;
+    int score=0;
     private static final int TUBE_SPACING = 125;
     private static final int TUBE_COUNT=4;
     private static final int GROUND_OFFSET = -50;
@@ -78,7 +80,19 @@ public class PlayState extends State {
                 gsm.set(new PlayState(gsm));
                 break;
             }
+
         }
+
+        //Score Calculation Added
+        if(bird.getPosition().x > tubes.get(curTubeNumber).getPosTopTube().x + tubes.get(curTubeNumber).getTopTube().getWidth() )
+        {
+            score++;
+            curTubeNumber++;
+            System.out.println(score);
+            if(curTubeNumber==4)
+                curTubeNumber=0;
+        }
+
         cam.update();
     }
 
@@ -93,7 +107,7 @@ public class PlayState extends State {
             sb.draw(tube.getTopTube(),tube.getPosTopTube().x,tube.getPosTopTube().y);
             sb.draw(tube.getBotTube(),tube.getPosBotTube().x,tube.getPosBotTube().y);
         }
-        sb.draw(bird.getTexture(), bird.getPosition().x, bird.getPosition().y,36,26);
+        sb.draw(bird.getTexture(), bird.getPosition().x, bird.getPosition().y,Bird.BIRD_WIDTH,Bird.BIRD_HEIGHT);
         //sb.draw(ground,cam.position.x-cam.viewportWidth/2,GROUND_OFFSET); // only doing this seems like ground is not moving
         sb.draw(ground,ground1.x,ground1.y);
        sb.draw(ground,ground2.x,ground2.y);

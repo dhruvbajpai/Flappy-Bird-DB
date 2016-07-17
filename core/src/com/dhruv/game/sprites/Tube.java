@@ -17,7 +17,7 @@ public class Tube {
     private Vector2 posTopTube, posBotTube;
     private Rectangle topBound, botBound;
     private static final int FLUCTUATION = 180;
-    private static final int TUBEGAP = 100;
+    private static final int TUBEGAP = 90;
     private static final int LOWESTOPENING = 80;
 
     private Random rand;

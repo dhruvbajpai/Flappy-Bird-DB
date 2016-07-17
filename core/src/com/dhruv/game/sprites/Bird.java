@@ -1,5 +1,7 @@
 package com.dhruv.game.sprites;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -13,11 +15,14 @@ public class Bird {
     private Vector3 position;
     private Vector3 velocity;
     private Texture bird;
+    public static final int BIRD_WIDTH = 36;
+    public static final int BIRD_HEIGHT = 26;
     private static final int MOVEMENT = 100;
     private static final int GRAVITY = -15;
     private Rectangle bounds;
     private Texture texture;
     private Animation birdAnimation;
+    private Sound flappingSound;
 
     public Bird(int x, int y) // starting position
     {
@@ -25,11 +30,11 @@ public class Bird {
         velocity = new Vector3(0,0,0);
        // bird = new Texture("bird.png");
         texture = new Texture("birdanim.jpg");
-
         birdAnimation = new Animation(new TextureRegion(texture),3,0.5f);
         //bounds = new Rectangle(x,y,bird.getWidth(),bird.getHeight());
        // bounds = new Rectangle(x,y,texture.getWidth()/3,texture.getHeight()/3);
-        bounds = new Rectangle(x,y,36,26);
+        bounds = new Rectangle(x,y,BIRD_WIDTH,BIRD_HEIGHT);
+        flappingSound = Gdx.audio.newSound(Gdx.files.internal("swing.ogg"));
     }
     public void update(float dt)
     {
@@ -55,6 +60,8 @@ public class Bird {
     public void jump()
     {
         velocity.y = 250;
+
+        flappingSound.play(0.5f);
     }
     public Rectangle getBounds()
     {
@@ -64,5 +71,6 @@ public class Bird {
     {
        // bird.dispose();
         texture.dispose();
+        flappingSound.dispose();
     }
 }
