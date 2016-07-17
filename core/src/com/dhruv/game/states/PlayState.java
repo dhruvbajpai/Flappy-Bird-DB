@@ -1,7 +1,9 @@
 package com.dhruv.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -17,6 +19,9 @@ public class PlayState extends State {
 
     private int curTubeNumber=0;
     int score=0;
+    Sound scoreIncrementSound;
+    String totalScore ="Score: 0";
+    private BitmapFont scoreCard;
     private static final int TUBE_SPACING = 125;
     private static final int TUBE_COUNT=4;
     private static final int GROUND_OFFSET = -50;
@@ -36,7 +41,8 @@ public class PlayState extends State {
         ground1= new Vector2(cam.position.x - cam.viewportWidth/2,GROUND_OFFSET);
         ground2 = new Vector2(cam.position.x - cam.viewportWidth/2 + ground.getWidth(),GROUND_OFFSET);
         cam.setToOrtho(false, FlappyDemo.WIDTH / 2, FlappyDemo.HEIGHT / 2);
-
+        scoreCard = new BitmapFont();
+        scoreIncrementSound = Gdx.audio.newSound(Gdx.files.internal("jump.ogg"));
         for(int i=1;i<=TUBE_COUNT;i++)
         {
 
@@ -64,7 +70,9 @@ public class PlayState extends State {
         handleInput();
         bird.update(dt);
         updateGround();
-        cam.position.x = bird.getPosition().x + 90;
+        cam.position.x = bird.getPosition().x + 90; // offset value for bird
+
+        // Tube reposition logic
         for(Tube tube: tubes)
         {
             if(cam.position.x - cam.viewportWidth/2 > (tube.getPosBotTube().x + tube.getTopTube().getWidth()))
@@ -87,6 +95,8 @@ public class PlayState extends State {
         if(bird.getPosition().x > tubes.get(curTubeNumber).getPosTopTube().x + tubes.get(curTubeNumber).getTopTube().getWidth() )
         {
             score++;
+            scoreIncrementSound.play(0.2f);
+            totalScore = "Score: "+ score;
             curTubeNumber++;
             System.out.println(score);
             if(curTubeNumber==4)
@@ -102,6 +112,7 @@ public class PlayState extends State {
         sb.begin();
         sb.draw(background,(cam.position.x - cam.viewportWidth/2),0);
 
+        //scoreCard
         for(Tube tube : tubes) // all 4 tubes drawn here
         {
             sb.draw(tube.getTopTube(),tube.getPosTopTube().x,tube.getPosTopTube().y);
@@ -111,6 +122,8 @@ public class PlayState extends State {
         //sb.draw(ground,cam.position.x-cam.viewportWidth/2,GROUND_OFFSET); // only doing this seems like ground is not moving
         sb.draw(ground,ground1.x,ground1.y);
        sb.draw(ground,ground2.x,ground2.y);
+        scoreCard.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        scoreCard.draw(sb,totalScore,cam.position.x - cam.viewportWidth/2+ 10,30);
 
        // sb.draw(flappy.getTexture(), flappy.getPosition().x, flappy.getPosition().y);
         sb.end();
