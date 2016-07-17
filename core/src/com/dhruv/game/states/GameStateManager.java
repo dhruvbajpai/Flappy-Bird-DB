@@ -22,12 +22,12 @@ public class GameStateManager {
 
     public void pop()
     {
-        states.pop();
+        states.pop().dispose();
     }
 
     public void set(State state)// immediately pop then push a state on top
     {
-        states.pop();
+        states.pop().dispose();
         states.push(state);
     }
 
