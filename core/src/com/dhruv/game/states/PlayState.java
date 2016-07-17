@@ -93,7 +93,7 @@ public class PlayState extends State {
             sb.draw(tube.getTopTube(),tube.getPosTopTube().x,tube.getPosTopTube().y);
             sb.draw(tube.getBotTube(),tube.getPosBotTube().x,tube.getPosBotTube().y);
         }
-        sb.draw(bird.getTexture(), bird.getPosition().x, bird.getPosition().y);
+        sb.draw(bird.getTexture(), bird.getPosition().x, bird.getPosition().y,36,26);
         //sb.draw(ground,cam.position.x-cam.viewportWidth/2,GROUND_OFFSET); // only doing this seems like ground is not moving
         sb.draw(ground,ground1.x,ground1.y);
        sb.draw(ground,ground2.x,ground2.y);

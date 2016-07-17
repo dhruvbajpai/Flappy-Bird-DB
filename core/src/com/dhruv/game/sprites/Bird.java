@@ -1,6 +1,7 @@
 package com.dhruv.game.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
@@ -15,16 +16,24 @@ public class Bird {
     private static final int MOVEMENT = 100;
     private static final int GRAVITY = -15;
     private Rectangle bounds;
+    private Texture texture;
+    private Animation birdAnimation;
 
     public Bird(int x, int y) // starting position
     {
         position = new Vector3(x,y,0);
         velocity = new Vector3(0,0,0);
-        bird = new Texture("bird.png");
-        bounds = new Rectangle(x,y,bird.getWidth(),bird.getHeight());
+       // bird = new Texture("bird.png");
+        texture = new Texture("birdanim.jpg");
+
+        birdAnimation = new Animation(new TextureRegion(texture),3,0.5f);
+        //bounds = new Rectangle(x,y,bird.getWidth(),bird.getHeight());
+       // bounds = new Rectangle(x,y,texture.getWidth()/3,texture.getHeight()/3);
+        bounds = new Rectangle(x,y,36,26);
     }
     public void update(float dt)
     {
+        birdAnimation.update(dt);
         if(position.y >0)
             velocity.add(0,GRAVITY,0);
         velocity.scl(dt);
@@ -40,8 +49,8 @@ public class Bird {
         return position;
     }
 
-    public Texture getTexture() {
-        return bird;
+    public TextureRegion getTexture() {
+        return birdAnimation.getFrame();
     }
     public void jump()
     {
@@ -53,6 +62,7 @@ public class Bird {
     }
     public void dispose()
     {
-        bird.dispose();
+       // bird.dispose();
+        texture.dispose();
     }
 }
